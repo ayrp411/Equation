@@ -92,7 +92,7 @@ Equation* e;
 
 
 
-// x^2 + 2x + 1 = 0 をテスト
+// x^2 + 2x + 2 = 0 をテスト
 // 虚数解 2つの場合。
 - (void)test4
 {
@@ -104,6 +104,48 @@ Equation* e;
     STAssertEqualsWithAccuracy(-1.0, [e imaginary2], 0.00001, @"imaginary2 error");
 }
 
+// x^2 + 7x + 10 = 0 をテスト
+// 実数解 2つの場合。
+- (void)test5
+{
+    e = [[Equation alloc] initWithA:1 b:7 c:10];
+    
+    // STAssertEqualsWithAccuracy は浮動小数点演算をテストするときに使います。
+    // 浮動小数点演算では誤差が発生するので，誤差の範囲内で等しいことを確かめる必要があります。
+    // accuracy とは誤差のことです。
+    STAssertEqualsWithAccuracy(-2.0, [e real1], 0.00001, @"real1 error");
+    STAssertEqualsWithAccuracy(-5.0, [e real2], 0.00001, @"real2 error");
+    STAssertEqualsWithAccuracy(0.0, [e imaginary1], 0.00001, @"imaginary1 error");
+    STAssertEqualsWithAccuracy(0.0, [e imaginary2], 0.00001, @"imaginary2 error");
+}
+
+
+// x^2 + 6x + 9 = 0 をテスト
+// 実数解1つ(重解)の場合
+- (void)test6
+{
+    e = [[Equation alloc] initWithA:1 b:6 c:9];
+    
+    STAssertEqualsWithAccuracy(-3.0, [e real1], 0.00001, @"real1 error");
+    STAssertEqualsWithAccuracy(-3.0, [e real2], 0.00001, @"real2 error");
+    STAssertEqualsWithAccuracy(0.0, [e imaginary1], 0.00001, @"imaginary1 error");
+    STAssertEqualsWithAccuracy(0.0, [e imaginary2], 0.00001, @"imaginary2 error");
+}
+
+
+// x^2 + 4x + 8 = 0 をテスト
+// 虚数解 2つの場合。
+- (void)test7
+{
+    e = [[Equation alloc] initWithA:1 b:4 c:8];
+    
+    STAssertEqualsWithAccuracy(2, [e real1], 0.00001, @"real1 error");
+    STAssertEqualsWithAccuracy(2, [e real2], 0.00001, @"real2 error");
+    STAssertEqualsWithAccuracy(2.0, [e imaginary1], 0.00001, @"imaginary1 error");
+    STAssertEqualsWithAccuracy(-2.0, [e imaginary2], 0.00001, @"imaginary2 error");
+}
+
+
 // ソフトウェアテストは同値クラスではないものを網羅的に行ったほうがいいです。
 // 2次方程式の解の場合，実数解2つ，重解と来たので，次は虚数解2つでしょうね。
 // 虚数解2つの場合として test4 を作ってみました。どうでしょう？ パスしましたか？
@@ -111,6 +153,9 @@ Equation* e;
 //
 // 試しにわざとエラーになるようにしてみましょう。
 // 同じ式で期待値をわざと変えてみました。
+
+
+
 /*
 - (void)testError
 {
